@@ -1,11 +1,11 @@
-//import com.sun.corba.se.spi.orb.Operation;
+import com.sun.corba.se.spi.orb.Operation;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.event.ActionListener;
 
 public class CalcFrame extends JFrame {
-   
+
     JTextArea display = new JTextArea();
     JPanel butonPanel = new JPanel(new GridLayout(3, 5));
     JButton buton0 = new JButton("0");
@@ -24,6 +24,7 @@ public class CalcFrame extends JFrame {
     JButton butonDiv = new JButton("/");
     JButton butonBack = new JButton("C");
     JButton butonStart = new JButton("=");
+    JButton butonAC = new JButton("AC");
     int firstValue = 0;
     String operation = "+";
 
@@ -51,6 +52,7 @@ public class CalcFrame extends JFrame {
         butonPanel.add(butonMul);
         butonPanel.add(butonStart);
         butonPanel.add(butonBack);
+        butonPanel.add(butonAC);
         setVisible(true);
         buton0.addActionListener(new ActionListener() {
             @Override
@@ -112,68 +114,74 @@ public class CalcFrame extends JFrame {
                 display.setText(display.getText() + "9");
             }
         });
-        butonBack.addActionListener(new ActionListener() {
+        butonAC.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String temp = display.getText();
-                display.setText(temp.substring(0, temp.length() - 1));
+                if (e.getSource() == butonAC) {
+                    display.setText(null);
+                };
+                butonBack.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String temp = display.getText();
+                        display.setText(temp.substring(0, temp.length() - 1));
+                    }
+                });
+                butonSum.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        firstValue = Integer.valueOf(display.getText());
+                        display.setText("");
+                        operation = "+";
+                    }
+                });
+                butonSub.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        firstValue = Integer.valueOf(display.getText());
+                        display.setText("");
+                        operation = "-";
+                    }
+                });
+                butonDiv.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        firstValue = Integer.valueOf(display.getText());
+                        display.setText("");
+                        operation = "/";
+                    }
+                });
+                butonMul.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        firstValue = Integer.valueOf(display.getText());
+                        display.setText("");
+                        operation = "*";
+                    }
+                });
+                butonStart.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent ae) {
+                        float secondValue = Integer.valueOf(display.getText());
+                        if ("+".equals(operation)) {
+                            display.setText((firstValue + secondValue) + "");
+                        }
+                        if ("-".equals(operation)) {
+                            display.setText((firstValue - secondValue) + "");
+                        }
+                        if ("*".equals(operation)) {
+                            display.setText((firstValue * secondValue) + "");
+                        }
+                        if ("/".equals(operation)) {
+                            display.setText((firstValue / secondValue) + "");
+                        }
+                        firstValue = 0;
+                        operation = "+";
+                    }
+                });
             }
-        });
-        butonSum.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                firstValue = Integer.valueOf(display.getText());
-                display.setText("");
-                operation = "+";
-            }
-        });
-        butonSub.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                firstValue = Integer.valueOf(display.getText());
-                display.setText("");
-                operation = "-";
-            }
-        });
-        butonDiv.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                firstValue = Integer.valueOf(display.getText());
-                display.setText("");
-                operation = "/";
-            }
-        });
-        butonMul.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                firstValue = Integer.valueOf(display.getText());
-                display.setText("");
-                operation = "*";
-            }
-        });
-         butonStart.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                float secondValue = Integer.valueOf(display.getText());
-                if("+".equals(operation)){
-                    display.setText((firstValue+secondValue)+"");
-                }
-                if("-".equals(operation)){
-                    display.setText((firstValue-secondValue)+"");
-                }
-                if("*".equals(operation)){
-                    display.setText((firstValue*secondValue)+"");
-                }
-                if("/".equals(operation)){
-                    display.setText((firstValue/secondValue)+"");
-                }
-                firstValue = 0;
-                operation = "+";
-            }
-        });
-    }
 
-    public static void main(String[] args) {
-        new CalcFrame();
-    }
-}
+            public static void main(String[] args) {
+                new CalcFrame();
+            }
+        }
