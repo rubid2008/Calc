@@ -1,3 +1,4 @@
+
 import com.sun.corba.se.spi.orb.Operation;
 import java.awt.*;
 import javax.swing.*;
@@ -117,10 +118,11 @@ public class CalcFrame extends JFrame {
         butonAC.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == butonAC) {
+                if (e.getSource() == butonAC) 
                     display.setText(null);
-                };
-                butonBack.addActionListener(new ActionListener() {
+                }
+        });
+        butonBack.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         String temp = display.getText();
